@@ -1,39 +1,32 @@
-# Introduction to Google Colab and PySpark by 박준영
-
 - 5. Jupyter Notebook Basics
     - 1. Code cells
-        
-        ![스크린샷 2024-07-05 오후 11.03.10.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.03.10.png)
-        
+        <img width="383" alt="스크린샷 2024-07-07 오후 11 42 01" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/8d68b2ad-02e1-405d-b43c-a6a8426910c6">
+
         간단한 파이썬의 곱셉 연산이다.
         
         파이썬에서 사칙연산은 외에도 덧셈은 ‘+’, 뺄셈은 ‘-’, 곱셉은 ’*’ 나눗셈은 ‘/’로 사용 가능하다.
         
         ---
-        
-        ![스크린샷 2024-07-05 오후 11.06.26.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.06.26.png)
+        <img width="655" alt="스크린샷 2024-07-07 오후 11 43 08" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/55624171-ef70-4dbc-a1ed-b4d054e6360c">
         
         파이썬의 collections 모듈의 Counter 클래스를 import하는 코드이다.
         
         파이썬만 설치되어 있으면, 별도의 패키지 설치 없이 Counter 클래스를 import하여 사용할 수 있다.
         
         이 Counter 클래스는 데이터의 개수를 측정할 때 아주 유용하다.
-        
-        ![스크린샷 2024-07-05 오후 11.09.52.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.09.52.png)
+        <img width="643" alt="스크린샷 2024-07-07 오후 11 43 21" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/0f942517-810c-479a-a06e-c9a2e6082503">
         
         Counter 생성자는 여러 형태의 데이터를 인자로 받는다. 중복된 데이터가 저장된 배열을 인자로 넘기면, 각 원소가 배열에 몇 번 포함되어있는지 저장된 Counter 객체를 얻을 수 있다.
         
         위는 Counter 생성자에 준영 2번, 지우 1번, 수지 1번이 포함되어 있어서 결과로 위와 같은 Counter 객체를 얻는다. 
         
         ---
-        
-        ![스크린샷 2024-07-05 오후 11.15.35.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.15.35.png)
+        <img width="629" alt="스크린샷 2024-07-07 오후 11 43 36" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/b9d0c6de-d8e8-46e3-bc8a-9b11cd31c485">
         
         파이썬의 출력문이다. print()의 인자로 큰 따옴표, 작은 따옴표 아무거나 사용가능하다.
         
     - 2. Text cells
-        
-        ![스크린샷 2024-07-05 오후 11.20.51.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.20.51.png)
+        <img width="647" alt="스크린샷 2024-07-07 오후 11 43 56" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/bc02b575-183e-42af-9ec5-9db9000a6a3c">
         
         텍스트 셀을 수정하려면, 특정  셀로 이동하여 ENTER 키를 누르거나 마우스로 더블 클릭한다.
         
@@ -42,14 +35,12 @@
         수정 사항 저장은 ESC 키를 누르거나, 다른 셀을 클릭하면 된다.
         
     - 3. Access to the shell
-        
-        ![스크린샷 2024-07-05 오후 11.23.10.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.23.10.png)
+        <img width="653" alt="스크린샷 2024-07-07 오후 11 44 22" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/158a268a-13ba-455a-9e7f-384803cd80a5">
         
         ls는 list의 약자로, 현재 directory에 존재하는 파일들을 리스트로 출력한다.
         
         ---
-        
-        ![스크린샷 2024-07-05 오후 11.28.11.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.28.11.png)
+        <img width="657" alt="스크린샷 2024-07-07 오후 11 44 56" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/5d05882b-493c-4713-8810-7147ff49778e">
         
         pwd는 print working directory의 약자로. 현재 작업 중인 directory 이름을 출력한다.
         
@@ -61,7 +52,7 @@
             - headless 버전은 GUI 관련 라이브러리 없이 Java 설치
             - -qq : 설치 과정에서 출력되는 메시지를 최소화
             - > dev/null : 출력되는 메시지가 화면에 표시되지 않도록 버림.
-        - !wget -q [http://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz](http://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz)
+        - !wget -q http://archive.apache.org/dist/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
             - Apache Spark 3.5.1의 바이너리 파일을 다운로드
             - wget : 지정된 URL에서 파일을 다운로드
             - -q : 다운로드 진행 상황을 출력하지 않음.
@@ -73,20 +64,18 @@
             - pip install : 지정된 파이썬 패키지를 설치
             - -q : 다운로드 진행 상황을 출력하지 않음.
             - findspark : 파이썬과 Spark 사이의 통합을 쉽게 해주는 패키지
-        
-        ![스크린샷 2024-07-05 오후 11.43.24.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.43.24.png)
+        <img width="636" alt="스크린샷 2024-07-07 오후 11 45 38" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/e1d39739-682b-42dc-9886-a560a04c17e9">
         
         기존 노트북에서 실행하면, 이미 파일이 존재한다고 나와서 복제 후 새 노트북에서 재실행 
-        
-        ![스크린샷 2024-07-05 오후 11.50.12.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.50.12.png)
-        
+        <img width="661" alt="스크린샷 2024-07-07 오후 11 46 33" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/4496a426-dcea-4735-a623-1d541c2f4902">
+
         대략 13분 정도 소요됨. 
         
         ---
         
         환경 변수 설정
         
-        ![스크린샷 2024-07-05 오후 11.57.10.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-05_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_11.57.10.png)
+        <img width="661" alt="스크린샷 2024-07-07 오후 11 45 54" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/4e75da9c-17a1-4836-b679-a02b01a1af23">
         
         - import os
             - 파이썬의 os 모듈을 import함.
@@ -98,8 +87,7 @@
         - os.environ["SPARK_HOME"] = "/content/spark-3.5.1-bin-hadoop3”
             - SPARK_HOME이란 환경 변수 설정
             - Spark와 관련된 라이브러리 및 실행 파일들의 위치를 알 수 있다.
-            
-            ![스크린샷 2024-07-06 오전 12.02.38.png](Introduction%20to%20Google%20Colab%20and%20PySpark%20by%20%E1%84%87%E1%85%A1%E1%86%A8%E1%84%8C%E1%85%AE%E1%86%AB%2096440b8e0cf046bc94297180e54ffec7/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-07-06_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A5%25E1%2586%25AB_12.02.38.png)
+            <img width="628" alt="스크린샷 2024-07-07 오후 11 46 55" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/20dd084f-ca33-4153-9c50-29b75b8e67e3">
             
         - import findspark
             - findspark 모듈을 import
@@ -124,4 +112,3 @@
             - “spark.sql.repl.eagerEval.enabled”, True : Spark 데이터 프레임을 출력할 때, 테이블 형식으로 출력되도록  설정.
         - spark
             - SparkSession 객체를 반환 및 출력
-        
