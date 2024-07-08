@@ -1,4 +1,4 @@
-- 5. Jupyter Notebook Basics
+- ## 5. Jupyter Notebook Basics
     - 1. Code cells
         <img width="383" alt="스크린샷 2024-07-07 오후 11 42 01" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/8d68b2ad-02e1-405d-b43c-a6a8426910c6">
 
@@ -112,3 +112,118 @@
             - “spark.sql.repl.eagerEval.enabled”, True : Spark 데이터 프레임을 출력할 때, 테이블 형식으로 출력되도록  설정.
         - spark
             - SparkSession 객체를 반환 및 출력
+  ---
+- ## 6. Exploring the Dataset
+    - 1. Loading the Dataset
+        <img width="655" alt="스크린샷 2024-07-08 오후 6 10 13" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/12ef7f1b-37da-4078-b326-2c5776dbd226">
+        
+        - !wget https://jacobceles.github.io/knowledge_repo/colab_and_pyspark/cars.csv
+        - wget : 지정된 URL에서 파일을 다운로드
+        - https://jacobceles.github.io/knowledge_repo/colab_and_pyspark/cars.csv URL에서 cars.csv 파일을 다운로드
+        - 다운로드가 성공되면, cars.csv 파일이 현재 작업 디렉토리에 추가됨
+            <img width="627" alt="스크린샷 2024-07-08 오후 6 10 27" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/3ad16cb1-ea18-482e-b973-d36aa3113893">
+            
+            ls 명령어를 통해 확인 가능
+            
+        - 구글 코랩 말고 로컬에서도 다운로드 받아 csv 파일을 확인
+            <img width="482" alt="스크린샷 2024-07-08 오후 6 10 45" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/aedde48f-711c-4031-acf2-fccedd582c13">
+            
+            ---
+            <img width="620" alt="스크린샷 2024-07-08 오후 6 11 02" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/699af61e-8ad8-48a6-be4c-3dcd2cf89bd0">
+            
+        - df = spark.read.csv('cars.csv', header=True, sep=";")
+            - spark.read.csv : Spark의 read 객체를 통해 csv 파일을 읽음
+            - ‘cars.csv’ : 읽을 csv 파일의 경로
+            - header=True : csv 파일의 첫 번째 row를 헤더로 설정. 출력된 열 이름들이 곧 csv 파일의 첫 번째 행이다
+            - sep=”;” : csv 파일에서 열이 ;(세미콜론)으로 구분되어 있음.
+        - df.show(5)
+            - 데이터 프레임의 처음 5행을 출력한다.
+        - header=False로 한 경우
+            <img width="625" alt="스크린샷 2024-07-08 오후 6 11 20" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/60eea39a-8c06-40ce-907f-803c6613360f">
+
+            
+            - 컬럼명이 c0….cn으로 변경되었고, csv 파일의 첫 번째 행도 데이터 프레임의 행으로 포함된 것을 확인
+    - 2. Viewing the Dataframe
+        - pyspark에서 dataframe을 조회하는 법
+            - df.take(5) : 데이터 프레임의 상위 5개 행을 리스트 형태로 반환.
+                <img width="596" alt="스크린샷 2024-07-08 오후 6 12 30" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/78fe762c-209c-46fe-9dac-378bc1bc3308">
+                
+                ---
+                
+            - df.collect() : 데이터 프레임의 모든 데이터를 리스트 형태로 반환.
+                <img width="611" alt="스크린샷 2024-07-08 오후 6 12 51" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/202df672-24fa-45bf-95fa-22107d8e1237">
+                
+                ---
+                
+            - df.show() : 데이터 프레임을 표 형식으로 출력
+            - 출력할 행의 수와 데이터의 truncate 여부를 설정 가능
+                <img width="600" alt="스크린샷 2024-07-08 오후 6 13 11" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/8577d83d-e1d2-410d-a05e-e87c6ad7a31b">
+
+                
+            - df.show(5, truncate=False) : 상위 5개의 행을 잘림 없이 출력
+                <img width="605" alt="스크린샷 2024-07-08 오후 6 13 23" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/a78454ac-d222-4543-9144-a12b59877d9f">
+
+                
+            - df.show(5, truncate=True) : 상위 5개 행을 출력. 문자열이 긴 경우 … 으로 생략됨
+            - 위 사진의 첫 번째 행에서 확인 가능
+            - 
+            
+            ---
+            
+            - df.limit(5) : 상위 5개 행을 포함하는 새로운 데이터 프레임을 반환
+            - Spark의 분산 특성상 항상 같은 결과를 보장하지 않음
+                <img width="591" alt="스크린샷 2024-07-08 오후 6 14 24" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/ef87428e-db55-4e5e-868d-775cf8d0e4a9">
+
+                
+    - 3. Viewing Dataframe Columns
+        - df.columns : 데이터 프레임의 모든 열 이름을 리스트로 반환
+            <img width="401" alt="스크린샷 2024-07-08 오후 6 18 49" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/2b14bb7e-bd4d-4a48-8995-1287f357599f">
+
+        
+    - 4. Dataframe Schema
+        - df.dtypes : 데이터 프레임의 열 이름과 데이터 타입이 튜플 형태로 반환
+            <img width="602" alt="스크린샷 2024-07-08 오후 6 15 41" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/4bf6b381-f146-46eb-9c3c-ed7322a74643">
+            
+        - 기본적으로 spark.read.csv는 모든 데이터를 문자열로 읽어온다.
+        - 따라서 df = spark.read.csv('cars.csv', header=True, sep=";", inferSchema=True)를 통해 데이터 타입을 자동으로 추론할 수 있다.
+            <img width="637" alt="스크린샷 2024-07-08 오후 6 15 55" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/1fe81433-633b-4d1e-9621-d58e29848a6e">
+
+        - 위 사진처럼 데이터 타입이 바뀌는 것을 확인할 수 있다.
+        
+        ---
+        
+        - df.printSchema() : 데이터 프레임의 열 이름과 데이터 타입이 트리 형태로 출력된다
+            <img width="596" alt="스크린샷 2024-07-08 오후 6 16 10" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/057d7aed-b121-4ebc-aec5-104568801d98">
+
+        - 마찬가지로 inferSchema=True를 통해 데이터 타입 추론이 가능하다.
+            <img width="608" alt="스크린샷 2024-07-08 오후 6 16 26" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/7d266011-eefa-4785-b895-dc9bd1ddcbf1">
+        
+        ---
+        <img width="637" alt="스크린샷 2024-07-08 오후 6 16 53" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/11574248-416a-4e9c-b16e-60cd1b796e1c">
+        
+        - from pyspark.sql.types import * : pyspark에서 데이터 프레임의 스키마를 정의할 때 사용되는 pyspark.sqk.types 모듈을 import함
+            <img width="635" alt="스크린샷 2024-07-08 오후 6 17 25" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/60b41b77-848d-4c50-8911-74cf9bb24191">
+
+      
+        - 이 모듈을 통해 각 열의 데이터 타입을 명시적으로 지정할 수 있다.
+        <img width="658" alt="스크린샷 2024-07-08 오후 6 17 37" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/52b2a9d0-bec3-4717-b50e-897edcc5cbfa">
+
+        
+        - labels : 각 열의 이름과 데이터 타입을 정의하는 튜플을 포함
+        - StructType : 데이터 프레임의 스키마를 정의하기 위한 클래스
+        - StructField : 스키마의 각 열을 정의하는 클래스, 첫 번째는 요소는 열의 이름, 두 번째 요소는 데이터 타입을 나타냄.
+            - x[0] : 열의 이름(ex, 자동차, 실린더, etc...)
+            - x[1] : 데이터 타입(ex, StringType(), IntegerType(), etc…)
+        - lables를 반복하면서 StructField 객체를 생성하여 StructType에 추가
+        - StructFiled의 세 번째 인자는 각 열이 nullable한지 나타낸다
+        - 생성된 schema 객체는 데이터 프레임을 생성할 때 사용 가능
+        
+        ---
+        <img width="622" alt="스크린샷 2024-07-08 오후 6 17 53" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/dde693cb-173c-4b5a-bbe4-2401f2cd8968">
+
+        
+        - 생성된 schema 객체를 데이터 프레임의 스키마로 설정하여 데이터 프레임을 생성한다.
+        - df.printSchema() : schema 객체로 데이터 프레임이 생성됐음을 확인할 수 있다.
+            <img width="621" alt="스크린샷 2024-07-08 오후 6 18 06" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/b795efa3-233d-431c-bb0b-7166ab940354">
+
+        - df.show()를 통해서도 마찬가지로 확인 가능하다.
