@@ -227,3 +227,110 @@
             <img width="621" alt="스크린샷 2024-07-08 오후 6 18 06" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/b795efa3-233d-431c-bb0b-7166ab940354">
 
         - df.show()를 통해서도 마찬가지로 확인 가능하다.
+- 7. DataFrame Operations on Columns
+    - 1. selecting columns
+        
+        
+        - df.Car : 데이터 프레임의 열 이름이 Car인 Column 객체를 반환한다.
+        - print(df.Car) : 데이터 프레임의 열 이름이 Car인 Column 객체를 출력한다.
+        - print(”*” * 20) : 문자열 “*”를 20번 반복 출력한다.
+        - df.select(df.Car).show(truncate=False) :
+            - 데이터 프레임의 열 Car를 선택하고, show()로 출력한다.
+            - 이때, truncate 옵션을 설정하여, 데이터의 길이가 길 때 자를지 말지 선택한다.
+            - 기본적으로 show()는 최초 20개의 행만을 출력한다.
+            
+        
+        - 이 경우에는 열의 대소문자를 구분한다. 그래서 Car이 아닌 car이 되면
+        - 데이터 프레임에 ‘car’이란 속성이 없다는 AttributeError가 발생한다.
+        
+        ---
+        
+        🚧 주의 🚧 
+        
+        - 만약에 열의 이름이 예약어 or 데이터 프레임 속성과 같다면 충돌할 수 있다.
+        - 열의 이름은 대소문자를 구분하기 때문에, 사용 전 열 이름이 특정 대소문자로 변경됐는지 확인해야 한다.
+        - 이를 위해 대괄호 표기법을 사용하는 것이 좋다.
+            
+            ---
+            
+            
+        - 이전과 다르게 점 표기법이 아니라, 대괄호 표기법을 사용한다.
+        - 이 경우에는 대소문자를 구분하지 않는다.
+        - df[’Car’] : 데이터 프레임의 열 이름이 Car인 Column 객체를 반환한다.
+        - print(df[’Car’]) : 데이터 프레임의 열 이름이 Car인 Column 객체를 출력한다.
+        - df.select(df[’Car’]).show(truncate=False) :
+            - 데이터 프레임의 열 Car를 선택하고, show()로 출력한다.
+        
+        ---
+      
+        
+        - from pyspark.sql.functions import col : pyspark.sql.functions 모듈의 col 메서드를 import한다.
+        - col() : col() 메서드는 pyspark에서 대소문자를 구분하지 않고 열 이름을 참조한다.
+        - col(’car’) : 열의 이름이 ‘car’인 열을 참조한다.
+        - df.select(col(’car’)) : 데이터 프레임에서 car 열을 선택한다.
+        - df.select(col(’car’)).show(truncate=True) : 데이터 프레임에서 car 열을 선택한 후 show() 메서드를 통해 출력한다.
+        
+    - 2. selecting multiple columns
+        - 여러개의 열을 선택하는 것이다. 하나의 열을 선택하는 것과의 유일한 차이점은 select()함수에 들어가는 열의 개수이다.
+            
+
+            
+    - 3. adding new columns
+        
+     
+        
+        - from pyspark.sql.functions import lit : pyspark.sql.functions 모듈에서 lit() 메서드를 import함
+        - lit() : 데이터 프레임에 상수 값을 추가함.
+        - withColumn() : 데이터 프레임에 새로운 열을 추가 or 기존 열을 수정 가능
+        - df = df.withColumn('박',lit(1)) : 데이터 프레임에 ‘박’이라는 열을 추가하고, 모든 행을 1로 추가
+        
+        ---
+        
+        
+        - 여러개의 열을 추가하는 것은 withColumn() 메서드를 추가할 열의 개수만큼 사용하면 된다.
+        
+        ---
+        
+        
+        - from pyspark.sql.functions import concat : pyspark.sql.functions 모듈에서 concat() 메서드를 import함
+        - concat() : 여러 열의 값을 결합한다.
+        - df.withColumn('준영', concat(col('준'), lit(' '), col('영'))) : 데이터 프레임의 ‘준영’이라는 열을 추가하고, 값은 concat()을 통해, ‘준’ 열의 데이터 + lit(’ ‘) + ‘영’ 열의 데이터를 결합하여 채운다.
+            
+            
+        - 위 사진은 ‘박준영’ 열을 ‘박’, ‘준’, ‘영’ 열의 데이터를 결합하여 추가한 것.
+        
+        ---
+        
+    - 4. renaming columns
+        
+        
+        - withColumnRenamed(’a’ , ‘b’) : 데이터 프레임의 ‘a’ 열의 이름을 ‘b’로 수정한다.
+        - ‘박’ 열의 이름을 ‘park’으로, ‘준’ 열의 이름을 ‘jun’으로, ‘영’ 열의 이름을 ‘yeong’으로 수정
+            
+            ```python
+            df = df.withColumnRenamed('박', 'park') \
+                   .withColumnRenamed('준', 'jun') \
+                   .withColumnRenamed('영', 'yeong')
+            ```
+            
+        
+    - 5. group by columns
+        
+        
+        - groupBy(’Origin’) : ‘Origin’ 열을 기준으로 데이터 프레임을 그룹화.
+        - 그룹화 : 같은 값을 가진 행을 하나의 그룹으로 묶는 것.
+        - count() : 그룹화된 각 그룹의 행 수를 센다.
+        - df.groupBy('Origin').count().show(5) : ‘Origin’ 열로 그룹화하여 각 그룹의 개수를 세어 상위 5개의 행만 출력한다.
+        
+        ---
+      
+        
+        - df.groupBy('Origin', ‘Model’).count().show(5) : ‘Origin’ 열과 ‘Model’ 열로 그룹화하여 각 그룹의 개수를 세어 상위 5개의 행만 출력한다
+    - 6. removing columns
+        
+   
+        
+        - df.drop(’박준영’) : 데이터 프레임에서 열의 이름이 박준영인 열을 제거
+            
+            
+        - 여러개의 열을 동시에 제거하려면 drop() 메서드를 연쇄 호출하면 된다.
