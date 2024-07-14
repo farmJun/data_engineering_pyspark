@@ -227,7 +227,7 @@
             <img width="621" alt="스크린샷 2024-07-08 오후 6 18 06" src="https://github.com/farmJun/data_engineering_pyspark/assets/101688752/b795efa3-233d-431c-bb0b-7166ab940354">
 
         - df.show()를 통해서도 마찬가지로 확인 가능하다.
-- 7. DataFrame Operations on Columns
+- ## 7. DataFrame Operations on Columns
     - 1. selecting columns
         
         
@@ -334,3 +334,89 @@
             
             
         - 여러개의 열을 동시에 제거하려면 drop() 메서드를 연쇄 호출하면 된다.
+     
+- ## 8. DataFrame Operations on Rows
+    - 1. filtering rows
+     
+        - count() : 데이터 프레임의 전체 행의 개수 혹은 필터링 된 행의 개수를 센다.
+        - df.count() : 데이터 프레임의 전체 행의 개수를 센다.
+        - df.filter(col('Origin') == 'Europe').count() : filter() 메서드를 통해 ‘Origin’ 열의 데이터가 ‘Europe’인 행만을 필터링하여, count() 메서드로 필터링된 행의 개수를 센다.
+        - df.filter(col('Origin')=='Europe').show(truncate=False) : filter() 메서드를 통해 ‘Origin’ 열의 데이터가 ‘Europe’인 행만을 필터링하여, show() 메서드로 필터링된 행만 출력한다.
+        
+        ---
+        
+   
+        - filter() 메서드는 단일 조건 뿐만 아니라 다중 조건을 포함될 수 있다.
+        
+        ```python
+        df.filter((col('Origin')=='Europe') & 
+        	         (col('Cylinders')==4)).count()
+        ```
+        
+        - filter() 메서드를 통해 ‘Origin’ 열의 데이터가 ‘Europe’이고, ‘Cylinders’ 열의 데이터가 4인 행만을 필터링하여, count() 메서드로 필터링된 행의 개수를 센다.
+        
+    - 2. get distinct rows
+        
+     
+        
+        - df.select(’Origin’) : 데이터 프레임에서 열의 이름이 ‘Origin’인 열을 선택
+        - df.select(’Origin’).distinct() : ‘Origin’인 열에서 중복 값을 제거하고 고유 값만을 추출
+        - df.select(’Origin’).distinct().show() :  ‘Origin’인 열에서 중복 값을 제거하고 고유 값만을 추출 후 출력
+        - 해석해보자면, ‘Origin’ 열의 데이터는 Europe, US, Japan 외에는 존재하지 않는다.
+        
+        ---
+        
+    
+        - df.select('Origin', 'model') : 데이터 프레임에서 Origin’ 열과 ‘Model’ 열을 선택
+        - df.select('Origin', 'model').distinct() : Origin’ 열과 ‘Model’ 열에서 중복 값을 제거하고 고유 값만을 추출
+        - df.select('Origin', 'model').distinct().show() : Origin’ 열과 ‘Model’ 열에서 중복 값을 제거하고 고유 값만을 추출 후 출력
+        - Origin’ 열과 ‘Model’ 열의 데이터가 고유한 행의 개수는 39개이다.
+    - 3. sorting rows
+        
+     
+        - df.orderBy('Cylinders') : ‘Cylinders’ 열을 기준으로 데이터 프레임의 행을 오름차순 정렬.
+        - orderBy() 메서드는 기본적으로 오름차순으로 정렬
+        
+        ---
+        
+   
+        - df.orderBy('Cylinders', ascending=False) : ascending=False을 통해 Cylinders’ 열을 기준으로 데이터 프레임의 행을 내림차순 정렬.
+        
+        ---
+      
+        
+        - col() 메서드 후 asc(), desc()를 연쇄 호출함으로 특정 열 기준으로 오름차순 및 내림차순 정렬 가능
+        
+        ---
+        
+        - df.groupBy("Origin") : ‘Origin’ 열을 기준으로 데이터 프레임을 그룹화
+        - df.groupBy("Origin").count() : 그룹화 행의 개수를 계산
+        - df.groupBy("Origin").count().orderBy('count', ascending=False) : count 열을 기준으로 내림차순으로 정렬한다.
+        - df.groupBy("Origin").count().orderBy('count', ascending=False).show() : 정렬된 결과를 상위 10개만 출력한다.
+        - 위 결과는 US에서 생성된 차가 254대, Japan에서 생성된 차가 79대, Eurpoe에서 생성된 차가 73대라는 뜻이다.
+        
+    - 4. union dataframes
+        - union() : 동일한 스키마/구조를 가진 두 개의 데이터프레임을 합친다.
+            - 두 데이터프레임은 동일한 수의 열, 동일한 데이터 유형, 이름을 가져야 함
+            - 일치하지 않으면 오류 발생
+        - unionAll() : Spark 2.0.0부터 deprecate 되었고, union()으로 대체됨.
+        - unionByName() : 열 이름을 기준으로 두 개의 데이터 프레임을 합친다.
+            - 열의 위치는 무시.
+        
+        ---
+  
+        
+        - spark.read.csv('cars.csv', header=True, sep=";", inferSchema=True) : cars.csv 파일을 읽고 데이터 프레임 생성
+        - europe_cars = df.filter((col('Origin')=='Europe') & (col('Cylinders')==5)) :  ‘Origin’ 열의 데이터가 'Europe'이고 ‘Cylinders’ 열의 데이터가 5인 행만 필터링 후 europe_cars에 할당
+        - japan_cars = df.filter((col('Origin')=='Japan') & (col('Cylinders')==3)) :  ‘Origin’ 열의 데이터가 'Japan'이고 ‘Cylinders’ 열의 데이터가 3인 행만 필터링 후 japan_car에 할당
+        - europe_cars.union(japan_cars).count() : europe_cars와 japan_cars를 합친 후, count() 메소드로 전체 행의 개수를 센다.
+        
+        ---
+        
+        
+        - df1 = spark.createDataFrame([[1, 2, 3]], ["col0", "col1", "col2"]) : 열 의 이름이 ‘col0’, ‘col1’, ‘col2’인 데이터 프레임 생성
+        - df2 = spark.createDataFrame([[4, 5, 6]], ["col1", "col2", "col0"]) : 열 의 이름이 ‘col1’, ‘col2’, ‘col0’인 데이터 프레임 생성
+        - df1.unionByName(df2).show() : unionByName() 메서드를 통해 df1과 df2를 열 이름 기준으로 합쳐서 출력한다.
+        - 결과는 두 데이터 프레임이 열 이름을 기준으로 잘 합쳐졌다.
+            
+        - 만약 일치하지 않는 열 ‘col3’과 ‘col0’이 데이터 프레임에 존재하면 AnalysisException이 발생
